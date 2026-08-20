@@ -1,0 +1,9 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    # Audited vendored upstream implementation. Our compatibility layer stays
+    # outside src/ and is analyzed with fatal warnings and infos.
+    - lib/src/**
+  errors:
+    deprecated_member_use_from_same_package: ignore

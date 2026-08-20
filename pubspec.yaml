@@ -1,0 +1,32 @@
+name: webview_flutter_linux
+description: Experimental WPE WebKit implementation of webview_flutter for Linux.
+version: 0.0.1
+publish_to: none
+repository: https://github.com/basantagoswami/webview_flutter_linux
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=3.44.9"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_inappwebview_platform_interface:
+    git:
+      url: https://github.com/pichillilorenzo/flutter_inappwebview.git
+      ref: 17527cae5a3371c1e87f9c1df4281a7710debf28
+      path: flutter_inappwebview_platform_interface
+  webview_flutter_platform_interface: ^2.15.1
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    implements: webview_flutter
+    platforms:
+      linux:
+        pluginClass: FlutterInappwebviewLinuxPlugin
+        dartPluginClass: LinuxWebViewPlatform
