@@ -618,16 +618,16 @@ class LinuxWebViewCookieManager extends webview.PlatformWebViewCookieManager {
   }
 
   @override
-  Future<List<webview.WebViewCookie>> getCookies({required Uri domain}) async {
+  Future<List<webview.WebViewCookie>> getCookies(Uri url) async {
     final cookies = await _delegate.getCookies(
-      url: inapp.WebUri(domain.toString()),
+      url: inapp.WebUri(url.toString()),
     );
     return cookies
         .map(
           (cookie) => webview.WebViewCookie(
             name: cookie.name,
             value: cookie.value,
-            domain: cookie.domain ?? domain.host,
+            domain: cookie.domain ?? url.host,
             path: cookie.path ?? '/',
           ),
         )
