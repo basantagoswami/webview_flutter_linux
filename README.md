@@ -15,6 +15,10 @@ The `flutter_inappwebview_platform_interface` dependency provides the shared
 types used by that Linux code. Copying it would require rewriting its imports
 and maintaining those types here.
 
+## Linux app integration
+
+Flutter automatically generates entries in the consuming app's `linux/flutter/generated_plugin_registrant.cc` and `linux/flutter/generated_plugins.cmake` to link the native plugin and register `FlutterInappwebviewLinuxPlugin`.
+
 Supported functionality:
 
 - JavaScript execution and returning results;
