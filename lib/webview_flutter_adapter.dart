@@ -51,10 +51,12 @@ class LinuxWebViewPlatform extends webview.WebViewPlatform {
 
 /// Controller that adapts `webview_flutter` operations to WPE WebKit.
 class LinuxWebViewController extends webview.PlatformWebViewController {
-  final Completer<LinuxInAppWebViewController> _ready =
-      Completer<LinuxInAppWebViewController>();
+  final inapp.InAppWebViewKeepAlive _keepAlive = inapp.InAppWebViewKeepAlive();
   final Map<String, webview.JavaScriptChannelParams> _javaScriptChannels =
       <String, webview.JavaScriptChannelParams>{};
+
+  Completer<LinuxInAppWebViewController> _ready =
+      Completer<LinuxInAppWebViewController>();
 
   LinuxInAppWebViewController? _delegate;
   LinuxNavigationDelegate? _navigationDelegate;
@@ -67,10 +69,15 @@ class LinuxWebViewController extends webview.PlatformWebViewController {
 
   LinuxWebViewController(super.params) : super.implementation();
 
+  /// Ties the native webview to this controller rather than to the widget, so
+  /// it survives `WebViewWidget` leaving the tree.
+  inapp.InAppWebViewKeepAlive get keepAlive => _keepAlive;
+
   inapp.InAppWebViewSettings get initialSettings => inapp.InAppWebViewSettings(
     javaScriptEnabled: _javaScriptMode == webview.JavaScriptMode.unrestricted,
     userAgent: _userAgent,
-    useShouldOverrideUrlLoading: true,
+    useShouldOverrideUrlLoading:
+        _navigationDelegate?.onNavigationRequest != null,
   );
 
   webview.LoadRequestParams? takeInitialRequest() {
@@ -98,9 +105,17 @@ class LinuxWebViewController extends webview.PlatformWebViewController {
       await delegate.loadUrl(urlRequest: _toInAppRequest(pendingRequest));
     }
 
-    if (!_ready.isCompleted) {
-      _ready.complete(delegate);
+    if (_ready.isCompleted) {
+      _ready = Completer<LinuxInAppWebViewController>();
     }
+    _ready.complete(delegate);
+  }
+
+  /// Destroys the native webview held by [keepAlive]. Nothing in
+  /// `webview_flutter` calls this, so a host that discards a controller must
+  /// call it or the native webview stays alive for the life of the process.
+  Future<void> dispose() async {
+    await _delegate?.disposeKeepAlive(_keepAlive);
   }
 
   @override
@@ -482,6 +497,7 @@ class _LinuxWebViewHostState extends State<_LinuxWebViewHost> {
       LinuxInAppWebViewWidgetCreationParams(
         layoutDirection: widget.layoutDirection,
         gestureRecognizers: widget.gestureRecognizers,
+        keepAlive: widget.controller.keepAlive,
         initialUrlRequest: initialRequest == null
             ? null
             : LinuxWebViewController._toInAppRequest(initialRequest),
@@ -521,7 +537,10 @@ class _LinuxWebViewHostState extends State<_LinuxWebViewHost> {
 
   @override
   void dispose() {
-    _platformView.dispose();
+    // Deliberately not _platformView.dispose(): that nulls the method channel
+    // of a controller which outlives this widget. CustomPlatformView's own
+    // dispose releases the native view, which the manager keeps because of
+    // keepAlive.
     super.dispose();
   }
 }

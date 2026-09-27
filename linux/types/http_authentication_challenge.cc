@@ -6,7 +6,7 @@ namespace flutter_inappwebview_plugin {
 
 HttpAuthenticationChallenge::HttpAuthenticationChallenge(const URLProtectionSpace& protectionSpace,
                                                          bool isRetry)
-    : protectionSpace(protectionSpace), isRetry(isRetry) {}
+    : protectionSpace(protectionSpace), previousFailureCount(isRetry ? 1 : 0) {}
 
 FlValue* HttpAuthenticationChallenge::toFlValue() const {
   return to_fl_map({

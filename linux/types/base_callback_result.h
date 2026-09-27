@@ -90,6 +90,13 @@ class BaseCallbackResult {
   void handleError(const std::string& code, const std::string& message) {
     if (error) {
       error(code, message);
+      return;
+    }
+    // No explicit handler: fall back to defaultBehaviour, as
+    // handleNotImplemented does. Otherwise a failure on the Dart side leaves
+    // the native request unanswered and its resource load blocked forever.
+    if (defaultBehaviour) {
+      defaultBehaviour(std::nullopt);
     }
   }
 

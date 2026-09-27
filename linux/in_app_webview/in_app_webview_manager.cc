@@ -249,6 +249,10 @@ void InAppWebViewManager::CreateInAppWebView(FlMethodCall* method_call) {
 
   if (!keepAliveId.empty()) {
     platform_view->set_keep_alive_id(keepAliveId);
+    // The Dart controller names its method channel after the keepAlive id, not
+    // the texture id, so re-attach on that name or every call to this webview
+    // raises MissingPluginException.
+    platform_view->webview()->AttachChannel(messenger_, keepAliveId, false);
   }
 
   platform_views_[texture_id] = std::move(platform_view);

@@ -240,10 +240,10 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.shouldOverrideUrlLoading!(
               _controllerFromPlatform,
               navigationAction,
-            ))?.toNativeValue();
+            ))?.toValue();
           return (await _inAppBrowserEventHandler!.shouldOverrideUrlLoading(
             navigationAction,
-          ))?.toNativeValue();
+          ))?.toValue();
         }
         break;
       case "onProgressChanged":
@@ -485,11 +485,11 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.onJsAlert!(
               _controllerFromPlatform,
               jsAlertRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
           else
             return (await _inAppBrowserEventHandler!.onJsAlert(
               jsAlertRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
         }
         return null;
       case "onJsConfirm":
@@ -505,11 +505,11 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.onJsConfirm!(
               _controllerFromPlatform,
               jsConfirmRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
           else
             return (await _inAppBrowserEventHandler!.onJsConfirm(
               jsConfirmRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
         }
         return null;
       case "onJsPrompt":
@@ -523,11 +523,11 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.onJsPrompt!(
               _controllerFromPlatform,
               jsPromptRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
           else
             return (await _inAppBrowserEventHandler!.onJsPrompt(
               jsPromptRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
         }
         return null;
       case "onJsBeforeUnload":
@@ -543,11 +543,11 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.onJsBeforeUnload!(
               _controllerFromPlatform,
               jsBeforeUnloadRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
           else
             return (await _inAppBrowserEventHandler!.onJsBeforeUnload(
               jsBeforeUnloadRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
         }
         return null;
       case "onPermissionRequest":
@@ -565,11 +565,11 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.onPermissionRequest!(
               _controllerFromPlatform,
               permissionRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
           else
             return (await _inAppBrowserEventHandler!.onPermissionRequest(
               permissionRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
         }
         return null;
       case "onReceivedHttpAuthRequest":
@@ -586,11 +586,11 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.onReceivedHttpAuthRequest!(
               _controllerFromPlatform,
               challenge,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
           else
             return (await _inAppBrowserEventHandler!.onReceivedHttpAuthRequest(
               challenge,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
         }
         return null;
       case "onReceivedServerTrustAuthRequest":
@@ -608,11 +608,11 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.onReceivedServerTrustAuthRequest!(
               _controllerFromPlatform,
               challenge,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
           else
             return (await _inAppBrowserEventHandler!
                     .onReceivedServerTrustAuthRequest(challenge))
-                ?.toMap();
+                ?.toMap(enumMethod: EnumMethod.value);
         }
         return null;
       case "onReceivedClientCertRequest":
@@ -630,11 +630,11 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.onReceivedClientCertRequest!(
               _controllerFromPlatform,
               challenge,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
           else
             return (await _inAppBrowserEventHandler!
                     .onReceivedClientCertRequest(challenge))
-                ?.toMap();
+                ?.toMap(enumMethod: EnumMethod.value);
         }
         return null;
       case "onDownloadStarting":
@@ -653,7 +653,7 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
               return (await webviewParams!.onDownloadStarting!(
                 _controllerFromPlatform,
                 downloadStartRequest,
-              ))?.toMap();
+              ))?.toMap(enumMethod: EnumMethod.value);
             else if (webviewParams!.onDownloadStartRequest != null)
               webviewParams!.onDownloadStartRequest!(
                 _controllerFromPlatform,
@@ -674,7 +674,7 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             );
             return (await _inAppBrowserEventHandler!.onDownloadStarting(
               downloadStartRequest,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
           }
         }
         return null;
@@ -811,11 +811,11 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.onNavigationResponse!(
               _controllerFromPlatform,
               navigationResponse,
-            ))?.toNativeValue();
+            ))?.toValue();
           else
             return (await _inAppBrowserEventHandler!.onNavigationResponse(
               navigationResponse,
-            ))?.toNativeValue();
+            ))?.toValue();
         }
         break;
       case "onPrintRequest":
@@ -913,11 +913,11 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
             return (await webviewParams!.onShowFileChooser!(
               _controllerFromPlatform,
               request,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
           else
             return (await _inAppBrowserEventHandler!.onShowFileChooser(
               request,
-            ))?.toMap();
+            ))?.toMap(enumMethod: EnumMethod.value);
         }
         return null;
       // onFindResultReceived is now handled by FindInteractionController
@@ -936,7 +936,7 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
               return (await webviewParams!.onLoadResourceWithCustomScheme!(
                 _controllerFromPlatform,
                 request,
-              ))?.toMap();
+              ))?.toMap(enumMethod: EnumMethod.value);
             else {
               return (await webviewParams!
                       // ignore: deprecated_member_use_from_same_package
@@ -944,14 +944,14 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
                     _controllerFromPlatform,
                     request.url,
                   ))
-                  ?.toMap();
+                  ?.toMap(enumMethod: EnumMethod.value);
             }
           } else {
             return ((await _inAppBrowserEventHandler!
                         .onLoadResourceWithCustomScheme(request)) ??
                     (await _inAppBrowserEventHandler!
                         .onLoadResourceCustomScheme(request.url)))
-                ?.toMap();
+                ?.toMap(enumMethod: EnumMethod.value);
           }
         }
         break;
@@ -1031,13 +1031,13 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
                   (await webviewParams!.onAjaxReadyStateChange!(
                     _controllerFromPlatform,
                     request,
-                  ))?.toNativeValue(),
+                  ))?.toValue(),
                 );
               else
                 return jsonEncode(
                   (await _inAppBrowserEventHandler!.onAjaxReadyStateChange(
                     request,
-                  ))?.toNativeValue(),
+                  ))?.toValue(),
                 );
             }
             return null;
@@ -1055,13 +1055,13 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
                   (await webviewParams!.onAjaxProgress!(
                     _controllerFromPlatform,
                     request,
-                  ))?.toNativeValue(),
+                  ))?.toValue(),
                 );
               else
                 return jsonEncode(
                   (await _inAppBrowserEventHandler!.onAjaxProgress(
                     request,
-                  ))?.toNativeValue(),
+                  ))?.toValue(),
                 );
             }
             return null;
@@ -1134,7 +1134,7 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
                 bool isMainFrame = arguments["isMainFrame"] ?? true;
                 // Call the listener's onPostMessage callback via channel
                 listener.channel?.invokeMethod("onPostMessage", {
-                  "message": message?.toMap(),
+                  "message": message?.toMap(enumMethod: EnumMethod.value),
                   "sourceOrigin": sourceOrigin,
                   "isMainFrame": isMainFrame,
                 });
@@ -1157,7 +1157,7 @@ class LinuxInAppWebViewController extends PlatformInAppWebViewController
                     : null;
                 webMessageChannel.internalChannel?.invokeMethod("onMessage", {
                   "index": index,
-                  "message": message?.toMap(),
+                  "message": message?.toMap(enumMethod: EnumMethod.value),
                 });
                 break;
               }

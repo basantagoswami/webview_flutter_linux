@@ -3,8 +3,7 @@
 
 #include <flutter_linux/flutter_linux.h>
 
-#include <optional>
-#include <string>
+#include <cstdint>
 
 #include "url_protection_space.h"
 
@@ -16,8 +15,7 @@ namespace flutter_inappwebview_plugin {
 class HttpAuthenticationChallenge {
  public:
   URLProtectionSpace protectionSpace;
-  std::optional<std::string> previousFailureCount;  // Number of retry attempts
-  bool isRetry;
+  int64_t previousFailureCount;
 
   HttpAuthenticationChallenge(const URLProtectionSpace& protectionSpace, bool isRetry);
   ~HttpAuthenticationChallenge() = default;
